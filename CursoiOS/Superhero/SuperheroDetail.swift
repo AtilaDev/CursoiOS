@@ -55,41 +55,25 @@ struct SuperheroStats: View {
   var body: some View {
     VStack{
       Chart{
-        SectorMark(angle: .value("Count", Int(stats.combat) ?? 0),
-                   innerRadius: .ratio(0.6),
-                   angularInset: 2
-        ).cornerRadius(5)
-          .foregroundStyle(by: .value("Category", "Combat"))
+        let statsArray: [(String, Int)] = [
+          ("Combat", Int(stats.combat) ?? 0),
+          ("Durability", Int(stats.durability) ?? 0),
+          ("Intelligence", Int(stats.intelligence) ?? 0),
+          ("Power", Int(stats.power) ?? 0),
+          ("Speed", Int(stats.speed) ?? 0),
+          ("Strength", Int(stats.strength) ?? 0),
+        ]
         
-        SectorMark(angle: .value("Count", Int(stats.durability) ?? 0),
-                   innerRadius: .ratio(0.6),
-                   angularInset: 2
-        ).cornerRadius(5)
-          .foregroundStyle(by: .value("Category", "Durability"))
-        
-        SectorMark(angle: .value("Count", Int(stats.intelligence) ?? 0),
-                   innerRadius: .ratio(0.6),
-                   angularInset: 2
-        ).cornerRadius(5)
-          .foregroundStyle(by: .value("Category", "Intelligence"))
-        
-        SectorMark(angle: .value("Count", Int(stats.power) ?? 0),
-                   innerRadius: .ratio(0.6),
-                   angularInset: 2
-        ).cornerRadius(5)
-          .foregroundStyle(by: .value("Category", "Power"))
-        
-        SectorMark(angle: .value("Count", Int(stats.speed) ?? 0),
-                   innerRadius: .ratio(0.6),
-                   angularInset: 2
-        ).cornerRadius(5)
-          .foregroundStyle(by: .value("Category", "Speed"))
-        
-        SectorMark(angle: .value("Count", Int(stats.strength) ?? 0),
-                   innerRadius: .ratio(0.6),
-                   angularInset: 2
-        ).cornerRadius(5)
-          .foregroundStyle(by: .value("Category", "Strength"))
+        ForEach(statsArray, id: \.0) { category, value in
+          SectorMark(
+            angle: .value("Count", value),
+            innerRadius: .ratio(0.6),
+            angularInset: 2
+          )
+          .cornerRadius(5)
+          .foregroundStyle(by: .value("Category", category))
+        }
+
       }
     }.padding(16)
       .frame(maxWidth: .infinity, maxHeight: 250)
