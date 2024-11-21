@@ -32,4 +32,8 @@ class ApiNetwork {
     let wrapper = try JSONDecoder().decode(Wrapper.self, from: data)
     return wrapper
   }
+  
+  func getHeroById(id:String) async throws -> Superhero{
+    
+  }
 }
