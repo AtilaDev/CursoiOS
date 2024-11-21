@@ -24,6 +24,37 @@ class ApiNetwork {
     let url:String
   }
   
+  struct SuperheroCompleted:Codable{
+    let id:String
+    let name:String
+    let image:ImageSuperhero
+    let powerstats:Powerstats
+    let biography:Biography
+  }
+  
+  struct Powerstats:Codable{
+    let intelligence:String
+    let strength:String
+    let speed:String
+    let durability:String
+    let power:String
+    let combat:String
+  }
+  
+  struct Biography:Codable{
+    let alignment:String
+    let publisher:String
+    let aliases:[String]
+    let fullName:String
+    
+    enum CodingKeys:String, CodingKey{
+      case fullName = "full-name"
+      case alignment
+      case publisher
+      case aliases
+    }
+  }
+  
   func getHeroesByQuery(query:String) async throws -> Wrapper{
     let url = URL(string: "https://superheroapi.com/api/7fe3d527dde897ac5105d4d529d07628/search/\(query)")!
     
@@ -33,7 +64,15 @@ class ApiNetwork {
     return wrapper
   }
   
-  func getHeroById(id:String) async throws -> Superhero{
+  func getHeroById(id:String) async throws -> SuperheroCompleted{
+    let url = URL(string: "https://superheroapi.com/api/7fe3d527dde897ac5105d4d529d07628/search/\(id)")!
     
+    let (data, _) = try await URLSession.shared.data(from: url)
+    
+    return try JSONDecoder().decode(
+      SuperheroCompleted.self,
+      from: data
+    )
+   
   }
 }

@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct SuperheroDetail: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+  let id:String
+  var body: some View {
+    Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+  }
 }
 
 #Preview {
-    SuperheroDetail()
-//  SuperheroSearch()
+  SuperheroDetail(id: "2")
+  //  SuperheroSearch()
 }
