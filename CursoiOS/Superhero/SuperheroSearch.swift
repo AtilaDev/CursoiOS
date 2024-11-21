@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct SuperheroSearch: View {
   @State var superheroName:String = ""
@@ -14,7 +15,7 @@ struct SuperheroSearch: View {
   var body: some View {
     VStack{
       TextField("", text: $superheroName, prompt:
-        Text("Super hero name...")
+                  Text("Super hero name...")
         .font(.title2)
         .bold()
         .foregroundColor(.gray)
@@ -53,7 +54,12 @@ struct SuperheroItem: View {
   
   var body: some View {
     ZStack{
-      Rectangle()
+      WebImage(url: URL(string: superhero.image.url))
+        .resizable()
+        .indicator(.activity)
+        .scaledToFill()
+        .frame(height: 200)
+      
       VStack{
         Spacer()
         Text(superhero.name)
@@ -74,6 +80,6 @@ struct SuperheroItem: View {
 
 
 #Preview {
-//  SuperheroItem(superhero: ApiNetwork.Superhero(id: "", name: "Ary"))
+  //  SuperheroItem(superhero: ApiNetwork.Superhero(id: "", name: "Ary"))
   SuperheroSearch()
 }
