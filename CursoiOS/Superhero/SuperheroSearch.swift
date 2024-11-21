@@ -37,11 +37,16 @@ struct SuperheroSearch: View {
           }
         }
       }
-      List(wrapper?.results ?? []){ superhero in
-        SuperheroItem(superhero: superhero)
+      NavigationStack{
+        List(wrapper?.results ?? []){ superhero in
+          ZStack{
+            SuperheroItem(superhero: superhero)
+            NavigationLink(destination: {}, label: {
+              EmptyView().opacity(0)
+            })
+          }.listRowBackground(Color.backgroundApp)
+        }
       }
-      .listStyle(.plain)
-      
       Spacer()
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -73,7 +78,6 @@ struct SuperheroItem: View {
     }
     .frame(height: 200)
     .cornerRadius(32)
-    .listRowBackground(Color.backgroundApp)
   }
 }
 
