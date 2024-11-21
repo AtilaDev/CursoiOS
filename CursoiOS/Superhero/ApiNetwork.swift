@@ -65,7 +65,7 @@ class ApiNetwork {
   }
   
   func getHeroById(id:String) async throws -> SuperheroCompleted{
-    let url = URL(string: "https://superheroapi.com/api/7fe3d527dde897ac5105d4d529d07628/search/\(id)")!
+    let url = URL(string: "https://superheroapi.com/api/7fe3d527dde897ac5105d4d529d07628/\(id)")!
     
     let (data, _) = try await URLSession.shared.data(from: url)
     
