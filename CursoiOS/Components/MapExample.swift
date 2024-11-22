@@ -18,14 +18,36 @@ struct MapExample: View {
   
   var body: some View {
     ZStack{
-      Map(position: $position)
-        .mapStyle(.hybrid(elevation: .realistic, showsTraffic: true))
-//        .onMapCameraChange(frequency: .continuous) { context in
-//          print(context.region)
-//        }
-        .onMapCameraChange { context in
-          print(context.region)
+      MapReader{ proxy in
+        Map(position: $position){
+//          Marker("Point", coordinate: CLLocationCoordinate2D(latitude:-31.3762564, longitude:-64.4724914))
+          Annotation("Point", coordinate: CLLocationCoordinate2D(latitude:-31.3762564, longitude:-64.4724914)){
+            Circle().frame(height: 30)
+          }.annotationTitles(.visible)
         }
+          .mapStyle(.hybrid(elevation: .realistic, showsTraffic: true))
+        //        .onMapCameraChange(frequency: .continuous) { context in
+        //          print(context.region)
+        //        }
+          .onMapCameraChange { context in
+            print(context.region)
+          }
+          .onTapGesture { coord in
+            if let coordinates = proxy.convert(coord, from: .local){
+              withAnimation{
+                position = MapCameraPosition.region(
+                  MKCoordinateRegion(
+                    center: CLLocationCoordinate2D(
+                      latitude:coordinates.latitude,
+                      longitude:coordinates.longitude
+                    ),
+                    span: MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
+                  )
+                )
+              }
+            }
+          }
+      }
       
       VStack{
         Spacer()
