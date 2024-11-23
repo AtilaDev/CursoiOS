@@ -18,16 +18,36 @@ struct FavPlaces: View {
   )
   
   @State var places:[Place] = []
-  
+  @State var showPopUp:Bool = false
+  @State var name:String = ""
+  @State var favPlace:Bool = false
   
   var body: some View {
     ZStack{
       MapReader{ proxy in
         Map(position: $position)
           .onTapGesture {
-//
+            showPopUp = true
           }
+      }
+      if showPopUp {
         
+        let view = VStack{
+          Text("Añadir localización").font(.title2).bold().padding(.bottom, 16)
+          TextField("Nombre", text: $name)
+            .padding(16)
+            .background(.gray.opacity(0.2))
+            .cornerRadius(16)
+          Toggle("¿Es un lugar favorito?", isOn: $favPlace).padding(.bottom, 24)
+          Button("Guardar") {
+            
+          }
+        }
+        withAnimation{
+          CustomDialog(closeDialog: {
+            showPopUp = false
+          }, onDismissOutside: false, content: view)
+        }
       }
     }
   }
