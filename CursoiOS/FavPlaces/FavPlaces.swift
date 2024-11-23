@@ -17,6 +17,9 @@ struct FavPlaces: View {
     )
   )
   
+  @State var places:[Place] = []
+  
+  
   var body: some View {
     ZStack{
       MapReader{ proxy in
